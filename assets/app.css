@@ -17,22 +17,24 @@ body{
 
 .kutu{
     border: 1px solid grey;
+    margin-bottom: 20px;
 }
 .aciklama{
     background-color: lightpink;
     font-size: 28px;
     text-align: center;
+    border-bottom: 1px solid black;
 }
 table{
     font-size: 22px;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 th{
-    padding-left: 60px;
+    padding-left: 50px;
     border-bottom: 1px solid black;    
 }
 td{
-    padding-left: 60px;
+    padding-left: 50px;
     border-bottom: 1px solid lightpink;
 }
 .animated {

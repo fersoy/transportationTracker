@@ -24,7 +24,6 @@
     </div>
     <div class="kutu">
         <div class="aciklama">Current Train Schedule</div>
-        <hr>
         <table>
             <thead>
                 <th>Train Name</th>
@@ -69,9 +68,42 @@
                 <td>235</td>
             </tr>
         </table>
-      
-
     </div>
+
+    <div class="row">
+            <div class="col-md-12">
+              <!-- Add Train  -->
+              <div class="card mb-4">
+                <div class="card-header">Add Train</div>
+                <div class="card-body">
+      
+                  <!-- Entry Form -->
+                  <form>
+                    <div class="form-group">
+                      <label for="train-name-input">Train Name</label>
+                      <input class="form-control" id="train-name-input" type="text">
+                    </div>
+                    <div class="form-group">
+                      <label for="destination-input">Destination</label>
+                      <input class="form-control" id="destination-input" type="text">
+                    </div>
+                    <div class="form-group">
+                      <label for="train-time-input">First Train Time(HH:mm-Military Time)</label>
+                      <input class="form-control" id="train-time-input" type="text">
+                    </div>
+                    <div class="form-group">
+                      <label for="frequency-input">Frequency(min)</label>
+                      <input class="form-control" id="frequency-input" type="text">
+                    </div>
+                    <button class="btn btn-primary float-left" id="add-train-btn">Submit</button>
+                  </form>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+      
+        </div>
   
 
 
