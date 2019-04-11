@@ -22,7 +22,7 @@ $("#train-btn").on("click", function(event) {
   var tFrequency = "";
   var trainTime = "";
   var arrivalTime = "";
-  var trainTimeConverted = moment(trainTime, "HH:mm").subtract(1, "years");
+  var trainTimeConverted = moment(trainTime, "HH:mm").subtract(1, "minutes");
   // var currentTime = moment().toNow;// this part need to be searched
   var diffTime = moment().diff(moment(trainTimeConverted), "minutes");
   var tRemainder = diffTime % tFrequency;
@@ -54,7 +54,7 @@ $("#train-btn").on("click", function(event) {
   console.log(newTrain.dest);
   console.log(newTrain.start);
   console.log(newTrain.time);
-  // console.log(newTrain.away);
+  console.log(newTrain.away);
 
   // Clears all of the text-boxes
   $("#train-name-input").val("");
@@ -71,7 +71,7 @@ database.ref().on("child_added", function(childSnapshot) {
     var destination = childSnapshot.val().dest;
     var trainTime = childSnapshot.val().start;
     var tFrequency = childSnapshot.val().time;
-    var arrivalTime = childSnapshot.val().away;
+    var nextTrain = childSnapshot.val().away;
   
     // Prettify the train time start
     var trainTimePretty = moment.unix(trainTime).format("HH:mm");
@@ -82,10 +82,13 @@ database.ref().on("child_added", function(childSnapshot) {
       $("<td>").text(destination),
       $("<td>").text(tFrequency),
       $("<td>").text(trainTime),
-      $("<td>").text(arrivalTime),
+      $("<td>").text(nextTrain),
     );
+    
   
     // Append the new row to the table
     $("#train-table > tbody").append(newRow);
+  },function(errorObject) {
+    console.log("Errors handled: " + errorObject.code);
   });
   
