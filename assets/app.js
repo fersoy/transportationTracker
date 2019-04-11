@@ -2,32 +2,39 @@
  $(".animated").css("color", "yellow")
 .slideUp(2000)
 .slideDown(2000);
+
+
   // Initialize Firebase
   var config = {
-    apiKey: "AIzaSyBkRZsDhKVdf1uhqBV3pgTdsWhJOUJApUw",
-    authDomain: "employeedatamanagement-31059.firebaseapp.com",
-    databaseURL: "https://employeedatamanagement-31059.firebaseio.com",
-    projectId: "employeedatamanagement-31059",
-    storageBucket: "employeedatamanagement-31059.appspot.com",
-    messagingSenderId: "580318130337"
+    apiKey: "AIzaSyAT1O_Yb38SNuy7vCq4SBHNitiql4smXcE",
+    authDomain: "traintracker-1b7bb.firebaseapp.com",
+    databaseURL: "https://traintracker-1b7bb.firebaseio.com",
+    projectId: "traintracker-1b7bb",
+    storageBucket: "",
+    messagingSenderId: "452571291620"
   };
   firebase.initializeApp(config);
   var database = firebase.database();
 
-$("#add-train-btn").on("click", function(event) {
+$("#train-btn").on("click", function(event) {
   event.preventDefault();
 
-  var tFrequency = 5;
-  var trainTime = "13:20";
+  var tFrequency = "";
+  var trainTime = "";
+  var arrivalTime = "";
   var trainTimeConverted = moment(trainTime, "HH:mm").subtract(1, "years");
-  var currentTime = moment();
+  // var currentTime = moment().toNow;// this part need to be searched
   var diffTime = moment().diff(moment(trainTimeConverted), "minutes");
   var tRemainder = diffTime % tFrequency;
   var tMinutesTillTrain = tFrequency - tRemainder;
-  var nextTrain = moment().add(tMinutesTillTrain, "minutes");
 
   var trainName = $("#train-name-input").val().trim();
   var destination = $("#destination-input").val().trim();
+  var trainTime = $("#train-time-input").val().trim();
+  var tFrequency = $("#frequency-input").val().trim();
+  var arrivalTime = moment().add(tMinutesTillTrain, "minutes");
+  var nextTrain = moment(arrivalTime).format("hh:mm");
+
 
 
   var newTrain = {
@@ -35,8 +42,9 @@ $("#add-train-btn").on("click", function(event) {
     dest: destination,
     start: trainTime,
     time: tFrequency,
-    away: nextTrain
+     away: nextTrain
   };
+  console.log(newTrain);
 
   // Uploads employee data to the database
   database.ref().push(newTrain);
@@ -46,13 +54,15 @@ $("#add-train-btn").on("click", function(event) {
   console.log(newTrain.dest);
   console.log(newTrain.start);
   console.log(newTrain.time);
-  console.log(newTrain.away);
+  // console.log(newTrain.away);
 
   // Clears all of the text-boxes
   $("#train-name-input").val("");
   $("#destination-input").val("");
   $("#train-time-input").val("");
   $("#frequency-input").val("");
+  $("#arrival-time-input").val("");
+
 });
 database.ref().on("child_added", function(childSnapshot) {
   
@@ -61,10 +71,10 @@ database.ref().on("child_added", function(childSnapshot) {
     var destination = childSnapshot.val().dest;
     var trainTime = childSnapshot.val().start;
     var tFrequency = childSnapshot.val().time;
-    var nextTrain = childSnapshot.val().away;
+    var arrivalTime = childSnapshot.val().away;
   
     // Prettify the train time start
-    // var trainTimePretty = moment.unix(trainTime).format("HH:mm");
+    var trainTimePretty = moment.unix(trainTime).format("HH:mm");
   
     // Create the new row
     var newRow = $("<tr>").append(
@@ -72,7 +82,7 @@ database.ref().on("child_added", function(childSnapshot) {
       $("<td>").text(destination),
       $("<td>").text(tFrequency),
       $("<td>").text(trainTime),
-      $("<td>").text(nextTrain),
+      $("<td>").text(arrivalTime),
     );
   
     // Append the new row to the table
